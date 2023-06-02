@@ -1,12 +1,7 @@
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly
 import plotly.graph_objs as go
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly import offline
 from plotly.subplots import make_subplots
 
 from sklearn.preprocessing import LabelEncoder
@@ -107,10 +102,7 @@ def exploratory_analysis(df):
 
 
 def encode_labels(df):
-    # Create a label encoder object
     le = LabelEncoder()
-    # Label Encoding will be used for columns with 2 or less unique
-
     le_count = 0
     for col in df.columns[1:]:
         if df[col].dtype == "object":
@@ -118,7 +110,7 @@ def encode_labels(df):
                 le.fit(df[col])
                 df[col] = le.transform(df[col])
                 le_count += 1
-    print("{} columns were label encoded.".format(le_count))
+    print(f"{le_count} columns were label encoded.")
 
 
 def convert_gender_to_bool(df):
@@ -138,12 +130,8 @@ def feature_transformation(df):
     return df
 
 
-def main():
+def run():
     df = preprocess_data()
     exploratory_analysis(df)
     df = feature_transformation(df)
     df.to_csv("./input/clean_data/telecom_customer_churn.csv", index=False)
-
-
-if __name__ == "__main__":
-    main()
